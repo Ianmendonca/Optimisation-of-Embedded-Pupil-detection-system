@@ -10,3 +10,6 @@ The main difference is in the pipeline used to detect the pupil, where conept of
 ![image](https://github.com/Ianmendonca/Optimisation-of-Embedded-Pupil-detection-system/assets/97366497/b1443456-74d3-4a6c-929f-259f40a78b71)
 
 Above you can see an example of binarised image using thresholding process in OpenCV
+
+![image](https://github.com/Ianmendonca/Optimisation-of-Embedded-Pupil-detection-system/assets/97366497/c80bcd90-d32a-43db-bbbf-1f0aedfb4e29)
+The above image shows a pipeline of detecting the pupil in this project.
