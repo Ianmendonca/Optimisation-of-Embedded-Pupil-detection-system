@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import random as rng
-import time
 
 def filter_contour(_contours):
     _contours_filtered = []
@@ -42,7 +41,8 @@ if pcap.isOpened():
         print(f'Puil camera available:')
 while True:
         pret, pframe = pcap.read()
-        if pret:                
+        if pret: 
+		# Crop the image to required resolution
                 pframe = pframe[0:480, 0:480]
                 output = pframe.copy()
                 gray = cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
@@ -54,7 +54,7 @@ while True:
 		    X is the output of previous operation, Y= thresholding pixel value which has to be 
   		   adjusted according the condition, Y is the maximum value of pixel'''
 		
-                _, thresholded = cv2.threshold(blurred, 124, 255, cv2.THRESH_BINARY_INV)#new method added
+                _, thresholded = cv2.threshold(blurred, 124, 255, cv2.THRESH_BINARY_INV) #new method added
                 contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 		contours_filtered = filter_contour(contours)
                 drawing = np.zeros((blurred.shape[0], blurred.shape[1], 3), dtype=np.uint8)
