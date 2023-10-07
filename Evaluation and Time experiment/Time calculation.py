@@ -48,8 +48,12 @@ def draw_ellipse(_drawing, _contours_filtered):
             pass
     return _drawing
 
+''' here you can specify the resolution of the video
+    (width, height) = (640,480) or (320,240) '''
 
-srcPiCam = 'libcamerasrc ! video/x-raw,width=640,height=480 ! videoflip method=clockwise ! videoconvert ! appsink drop=True'
+width = 640
+height = 480
+srcPiCam = 'libcamerasrc ! video/x-raw,width=width,height=height ! videoflip method=clockwise ! videoconvert ! appsink drop=True'
 pcap = cv2.VideoCapture(srcPiCam)
 if pcap.isOpened():
         print(f'Pupil camera available:')
@@ -102,7 +106,6 @@ while True:
 pcap.release()
 cv2.destroyAllWindows()
 
-
 df_experiment['Total Time'] = total_time
 df_experiment['Pre Process Time'] = pre_process_time 
 df_experiment['Post Process'] = post_process
@@ -111,9 +114,7 @@ df_experiment['Thresholding'] = thresholding
 df_experiment['Find Contours'] = find_contours
 df_experiment['Filter Contour'] = fil_contour
 
-
 time_right_now = datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
-file_name = f'//home//ubicomp//Desktop//eye-tracking//Raspberry-Pi//Time Experiment//640x480 resolution//640_480_total_time{time_right_now}.csv'
+file_name = f'//home//ubicomp//Desktop//eye-tracking//Raspberry-Pi//Time Experiment//640x480 resolution//{width}_{height}_total_time{time_right_now}.csv'
 df_experiment.to_csv(file_name, index=False)
-
 
