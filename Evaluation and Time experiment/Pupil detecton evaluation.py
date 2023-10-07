@@ -6,7 +6,7 @@ import os
 import pandas as pd
 
 # Define the directory where your folders are located
-base_directory = "E:\Masters\Semester 4\Studienarbeit - 1\PUpil detection\LPW"
+base_directory = "Path to read the data\LPW"
 
 #initialization
 Px_1_error = 0
@@ -18,6 +18,7 @@ Px_25_error = 0
 
 # Get a list of folder names within the base directory
 folder_names = os.listdir(base_directory)
+total_images = 0
 
 # Iterate through each folder
 for folder_name in folder_names:
@@ -42,9 +43,7 @@ for folder_name in folder_names:
             avi_path = os.path.join(folder_path, avi_file)
             txt_path = os.path.join(folder_path, corresponding_txt)
 
-            #reading the ground truth file
-        print(avi_path)
-        print(txt_path)
+        #reading the ground truth file
         ground_truth = pd.read_csv(txt_path,sep =' ',header=None)
         ground_truth.columns = ['x_truth','y_truth']
         ground_truth['Sl_No'] = ground_truth.index
@@ -102,6 +101,7 @@ for folder_name in folder_names:
 
             if not ret:  # If no frame is read, break the loop
                 break
+            total_images +=1
             copy = frame[0:480,0:480]            
             frame_number = int(cap.get(cv2.CAP_PROP_POS_FRAMES))-1
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -122,9 +122,10 @@ for folder_name in folder_names:
 
         df_predicted = pd.DataFrame.from_dict(frame_dict, orient='index')
 
-        #merge two dataFrames
+        # merge two dataFrames
         merged_df = pd.merge(df_predicted, ground_truth, on='Sl_No')
 
+        # finding the absolute error between the ground truth and predicted pupil centers
         merged_df['x_error'] = (merged_df['x_truth']-merged_df['x_pred']).abs()
         merged_df['y_error'] = (merged_df['y_truth']-merged_df['y_pred']).abs() 
 
@@ -134,6 +135,7 @@ for folder_name in folder_names:
         count_15px = ((merged_df['x_error']<15) & (merged_df['y_error']<15)).sum()
         count_20px = ((merged_df['x_error']<20) & (merged_df['y_error']<20)).sum()
         count_25px = ((merged_df['x_error']<25) & (merged_df['y_error']<25)).sum()
+
         Px_1_error = Px_1_error + count_1px
         Px_5_error = Px_5_error + count_5px
         Px_10_error = Px_10_error + count_10px
@@ -142,18 +144,22 @@ for folder_name in folder_names:
         Px_25_error = Px_25_error + count_25px
 
 
-        #df.to_excel(f'E:\\Masters\\Semester 4\\Studienarbeit - 1\\PUpil detection\\Evaluation Data\\output_file_{i}.xlsx')
-print('1 pixel error' , Px_1_error/130856,
-            '5 pixel error' , Px_5_error/130856,
-            '10 pixel error' , Px_10_error/130856,
-            '15 pixel error' , Px_15_error/130856,
-            '20 pixel error' , Px_20_error/130856,
-            '25 pixel error' , Px_25_error/130856,)
-Accuracy =[ {'Error':'1 pixel error','Accuracy' : Px_1_error/130856},
-            {'Error':'5 pixel error' ,'Accuracy': Px_5_error/130856},
-            {'Error':'10 pixel error','Accuracy' : Px_10_error/130856},
-            {'Error':'15 pixel error' ,'Accuracy': Px_15_error/130856},
-            {'Error':'20 pixel error','Accuracy' : Px_20_error/130856},
-            {'Error':'25 pixel error' ,'Accuracy': Px_25_error/130856}]
+# df.to_excel(f'E:\\Masters\\Semester 4\\Studienarbeit - 1\\PUpil detection\\Evaluation Data\\output_file_{i}.xlsx')
+# Print the total error for different pixel sizes
+print('1 pixel error' , Px_1_error/total_images,
+            '5 pixel error' , Px_5_error/total_images,
+            '10 pixel error' , Px_10_error/total_images,
+            '15 pixel error' , Px_15_error/total_images,
+            '20 pixel error' , Px_20_error/total_images,
+            '25 pixel error' , Px_25_error/total_images,)
+
+# storing the accuracy values for different pixel values 
+Accuracy =[ {'Error':'1 pixel error','Accuracy' : Px_1_error/total_images},
+            {'Error':'5 pixel error' ,'Accuracy': Px_5_error/total_images},
+            {'Error':'10 pixel error','Accuracy' : Px_10_error/total_images},
+            {'Error':'15 pixel error' ,'Accuracy': Px_15_error/total_images},
+            {'Error':'20 pixel error','Accuracy' : Px_20_error/total_images},
+            {'Error':'25 pixel error' ,'Accuracy': Px_25_error/total_images}]
+
 df = pd.DataFrame(Accuracy)
-#df.to_excel('E:\Masters\Semester 4\Studienarbeit - 1\PUpil detection\Accuracy.xlsx', index=False)
+df.to_excel('Path to save excel file\Accuracy.xlsx', index=False)
