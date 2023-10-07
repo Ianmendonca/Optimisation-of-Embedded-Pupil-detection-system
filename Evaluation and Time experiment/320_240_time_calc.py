@@ -5,6 +5,8 @@ import time
 import pandas as pd
 from datetime import datetime
 
+''' Create a dataframe to store the time details for all the processess'''
+
 columns = ('Total Time','Pre Process Time','Post Process','Blurring','Thresholding','Find Contours','Filter Contour')
 df_experiment =pd.DataFrame(columns = columns)
 
@@ -15,6 +17,8 @@ blurring = []
 thresholding = []
 find_contours = []
 fil_contour = []
+
+''' filter the contours based on the area and circularity'''
 
 def filter_contour(_contours):
     _contours_filtered = []
@@ -71,7 +75,6 @@ while True:
                 _, thresholded = cv2.threshold(blurred, 124, 255, cv2.THRESH_BINARY_INV)
                 threshold_time_end = time.process_time()
                 thresholding.append(threshold_time_end - threshold_time_start)
-                
                 
                 pre_process_time_end = time.process_time()
                 pre_process_time.append(pre_process_time_end - t1)
