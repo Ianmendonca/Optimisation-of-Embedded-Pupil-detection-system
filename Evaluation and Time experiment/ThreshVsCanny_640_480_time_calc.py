@@ -93,5 +93,3 @@ df_experiment['Thresholding'] = thresholding
 time_right_now = datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
 file_name = f'//home//ubicomp//Desktop//eye-tracking//Raspberry-Pi//Time Experiment//ThresholdingVsCannyEdgeDetection//ThresholdingVsCanny_640_480_{time_right_now}.csv'
 df_experiment.to_csv(file_name, index=False)
-
-
