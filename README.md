@@ -13,3 +13,5 @@ Above you can see an example of binarised image using thresholding process in Op
 
 ![image](https://github.com/Ianmendonca/Optimisation-of-Embedded-Pupil-detection-system/assets/97366497/c80bcd90-d32a-43db-bbbf-1f0aedfb4e29)
 The above image shows a pipeline of detecting the pupil in this project.
+
+The new pipeline is evaluated using a publicly available dataset**(https://doi.org/10.48550/arXiv.1511.05768)**
