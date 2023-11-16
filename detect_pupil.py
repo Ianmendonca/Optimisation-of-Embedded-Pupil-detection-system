@@ -48,11 +48,13 @@ while True:
                 gray = cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
                 blurred = cv2.GaussianBlur(gray, (3,3), 0)
 		
-		''' Image binarisation/thresholding divides the eye image into two parts,
+		''' 
+  		    Image binarisation/thresholding divides the eye image into two parts,
 		    black(pupil) and white(rest of the eye).
-      		    _, thresholded = cv2.threshold(X, Y, Z, cv2.THRESH_BINARY_INV)#new method added
+      		    _, thresholded = cv2.threshold(X, Y, Z, cv2.THRESH_BINARY_INV)
 		    X is the output of previous operation, Y= thresholding pixel value which has to be 
-  		   adjusted according the condition, Y is the maximum value of pixel'''
+  		    adjusted according the condition, Y is the maximum value of the pixel
+       		'''
 		
                 _, thresholded = cv2.threshold(blurred, 124, 255, cv2.THRESH_BINARY_INV) #new method added
                 contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
