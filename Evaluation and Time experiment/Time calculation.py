@@ -5,6 +5,10 @@ import time
 import pandas as pd
 from datetime import datetime
 
+'''
+Total time required for each process is calculated here. 
+'''
+
 columns = ('Total Time','Pre Process Time','Post Process','Blurring','Thresholding','Find Contours','Filter Contour')
 df_experiment =pd.DataFrame(columns = columns)
 
@@ -115,6 +119,6 @@ df_experiment['Find Contours'] = find_contours
 df_experiment['Filter Contour'] = fil_contour
 
 time_right_now = datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
-file_name = f'//home//ubicomp//Desktop//eye-tracking//Raspberry-Pi//Time Experiment//640x480 resolution//{width}_{height}_total_time{time_right_now}.csv'
+file_name = f'path to the directory//{width}_{height}_total_time{time_right_now}.csv'
 df_experiment.to_csv(file_name, index=False)
 
