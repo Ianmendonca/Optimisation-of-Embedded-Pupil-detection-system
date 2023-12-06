@@ -5,6 +5,11 @@ import random as rng
 import os
 import pandas as pd
 
+'''
+Here accuracy of the model is calculated using the LPW dataset with resolution 640x480.
+Accuracy is calculated for different pixel errors.
+'''
+
 # Define the directory where your folders are located
 base_directory = "Path to read the data\LPW"
 
@@ -129,6 +134,7 @@ for folder_name in folder_names:
         merged_df['x_error'] = (merged_df['x_truth']-merged_df['x_pred']).abs()
         merged_df['y_error'] = (merged_df['y_truth']-merged_df['y_pred']).abs() 
 
+        #counting the total number of predictions in each category of errors
         count_1px = ((merged_df['x_error']<1) & (merged_df['y_error']<1)).sum()
         count_5px = ((merged_df['x_error']<5) & (merged_df['y_error']<5)).sum()
         count_10px = ((merged_df['x_error']<10) & (merged_df['y_error']<10)).sum()
@@ -143,8 +149,6 @@ for folder_name in folder_names:
         Px_20_error = Px_20_error + count_20px
         Px_25_error = Px_25_error + count_25px
 
-
-# df.to_excel(f'E:\\Masters\\Semester 4\\Studienarbeit - 1\\PUpil detection\\Evaluation Data\\output_file_{i}.xlsx')
 # Print the total error for different pixel sizes
 print('1 pixel error' , Px_1_error/total_images,
             '5 pixel error' , Px_5_error/total_images,
@@ -162,4 +166,6 @@ Accuracy =[ {'Error':'1 pixel error','Accuracy' : Px_1_error/total_images},
             {'Error':'25 pixel error' ,'Accuracy': Px_25_error/total_images}]
 
 df = pd.DataFrame(Accuracy)
+
+#Storing the values the in an excel format in the local directory
 df.to_excel('Path to save excel file\Accuracy.xlsx', index=False)
