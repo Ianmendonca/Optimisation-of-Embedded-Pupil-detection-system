@@ -5,7 +5,7 @@ This project inspired by the work done in **["An Embedded and Real-Time Pupil De
 
 The setup used for the this project is same as used in the project mentioned above.
 
-The main difference is in the pipeline used to detect the pupil, where conept of Binarization is used instead of Canny edge detection.More about this is mentioned in the report attached and these changes can be found in the Optimized_detect_pupil.py file. Please refer the file **detect.py** in **Rasberry-Pi directory** in the above mentioned repository for comparing the old code with the new.
+The main difference is in the pipeline used to detect the pupil, where conept of Binarization is used instead of Canny edge detection.More about this is mentioned in the report attached and these changes can be found in the detect_pupil.py file. Please refer the file **detect.py** in **Rasberry-Pi directory** in the above mentioned repository for comparing the old code with the new.
 
 ![image](https://github.com/Ianmendonca/Optimisation-of-Embedded-Pupil-detection-system/assets/97366497/b1443456-74d3-4a6c-929f-259f40a78b71)
 
