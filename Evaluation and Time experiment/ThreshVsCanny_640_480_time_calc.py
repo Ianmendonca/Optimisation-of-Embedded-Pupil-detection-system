@@ -5,7 +5,12 @@ import time
 import pandas as pd
 from datetime import datetime
 
-'''Change the parameters to conduct a real time detection'''
+'''
+Here time difference between canny edge detection and binarizaiton is calculated
+for a resolution 480x640.
+Change the parameters to conduct a real time detection
+'''
+
 CANNY_THRESHOLD = 25
 
 columns = ('Thresholding','Canny Detection',)
@@ -46,6 +51,11 @@ def draw_ellipse(_drawing, _contours_filtered):
         except TypeError:
             pass
     return _drawing
+
+'''
+width = 320
+height = 240
+'''
 
 srcPiCam = 'libcamerasrc ! video/x-raw,width=640,height=480 ! videoflip method=clockwise ! videoconvert ! appsink drop=True'
 pcap = cv2.VideoCapture(srcPiCam)
@@ -91,5 +101,7 @@ df_experiment['Canny Detection'] = Canny
 df_experiment['Thresholding'] = thresholding
 
 time_right_now = datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
-file_name = f'//home//ubicomp//Desktop//eye-tracking//Raspberry-Pi//Time Experiment//ThresholdingVsCannyEdgeDetection//ThresholdingVsCanny_640_480_{time_right_now}.csv'
+
+#saving the file in an excel format in a local directory
+file_name = f'path to the directory//ThresholdingVsCanny_640_480_{time_right_now}.csv'
 df_experiment.to_csv(file_name, index=False)
